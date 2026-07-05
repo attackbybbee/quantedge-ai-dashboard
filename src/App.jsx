@@ -375,27 +375,27 @@ function App() {
         </section>
 
         <section className="metric-grid">
-          <article>
-            <span>Win Rate</span>
-            <strong>{signal.metrics.winRate}</strong>
-            <small>Rolling 90-day model</small>
-          </article>
-          <article>
-            <span>Sharpe Ratio</span>
-            <strong>{signal.metrics.sharpe}</strong>
-            <small>Risk-adjusted return</small>
-          </article>
-          <article>
-            <span>Max Drawdown</span>
-            <strong>{signal.metrics.drawdown}</strong>
-            <small>Backtest risk floor</small>
-          </article>
-          <article>
-            <span>Backtest Return</span>
-            <strong>{signal.metrics.backtest}</strong>
-            <small>Simulated strategy P/L</small>
-          </article>
-        </section>
+            <article>
+                <span>Win Rate</span>
+                <strong>{signal.metrics.winRate}</strong>
+                <small>Rolling 90-day model</small>
+            </article>
+            <article>
+                <span>Sharpe Ratio</span>
+                <strong>{signal.metrics.sharpe}</strong>
+                <small>Risk-adjusted return</small>
+            </article>
+            <article>
+                <span>Max Drawdown</span>
+                <strong>{signal.metrics.drawdown}</strong>
+                <small>Backtest risk floor</small>
+            </article>
+            <article>
+                <span>Backtest Return</span>
+                <strong>{signal.metrics.backtest}</strong>
+                <small>Simulated strategy P/L</small>
+            </article>
+            </section>
 
         <section className="log-panel">
           <div>
