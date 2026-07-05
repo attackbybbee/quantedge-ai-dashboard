@@ -430,17 +430,7 @@ function App() {
         </section>
 
         <section className="metric-grid">
-        <section className="tradingview-panel">
-          <div className="tradingview-heading">
-            <div>
-              <p className="eyebrow">TradingView Reference</p>
-              <h2>Live Market Snapshot</h2>
-            </div>
-            <span>External market widget</span>
-          </div>
-
-            <TradingViewWidget />
-          </section>
+        
             <article>
                 <span>Win Rate</span>
                 <strong>{signal.metrics.winRate}</strong>
@@ -462,6 +452,17 @@ function App() {
                 <small>Simulated strategy P/L</small>
             </article>
             </section>
+            <section className="tradingview-panel">
+          <div className="tradingview-heading">
+            <div>
+              <p className="eyebrow">TradingView Reference</p>
+              <h2>Live Market Snapshot</h2>
+            </div>
+            <span>External market widget</span>
+          </div>
+
+            <TradingViewWidget />
+          </section>
 
         <section className="log-panel">
           <div>
