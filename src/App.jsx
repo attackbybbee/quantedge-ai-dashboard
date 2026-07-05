@@ -83,33 +83,46 @@ const signalPresets = {
 
 function createSeries(base, signalType = 'HOLD', timeframe = '1M') {
   const frameConfig = {
-    '1D': { points: 24, label: 'H', volatility: 0.9 },
-    '1W': { points: 28, label: 'D', volatility: 1.2 },
-    '1M': { points: 32, label: 'T', volatility: 1.6 },
-    '6M': { points: 48, label: 'W', volatility: 2.4 },
+    '1D': {
+      labels: [
+        '09:30', '10:00', '10:30', '11:00', '11:30', '12:00',
+        '12:30', '13:00', '13:30', '14:00', '14:30', '15:00',
+      ],
+      volatility: 0.8,
+    },
+    '1W': {
+      labels: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri'],
+      volatility: 1.1,
+    },
+    '1M': {
+      labels: ['W1', 'W2', 'W3', 'W4'],
+      volatility: 1.6,
+    },
+    '6M': {
+      labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun'],
+      volatility: 2.2,
+    },
   }
 
   const config = frameConfig[timeframe]
-  const labels = []
+  const labels = config.labels
   const values = []
-  const signalIndex = Math.floor(config.points * 0.7)
+  const signalIndex = Math.max(1, Math.floor(labels.length * 0.7))
 
   let price = base
 
-  for (let i = 0; i < config.points; i += 1) {
+  for (let i = 0; i < labels.length; i += 1) {
     const drift =
       signalType === 'BUY'
-        ? 0.34
+        ? 0.7
         : signalType === 'SELL'
-          ? -0.28
-          : 0.06
+          ? -0.62
+          : 0.12
 
-    const wave = Math.sin(i / 2.3) * config.volatility
-    const pulse = Math.cos(i / 3.1) * (config.volatility * 0.65)
+    const wave = Math.sin(i / 1.4) * config.volatility
+    const pulse = Math.cos(i / 1.8) * (config.volatility * 0.45)
 
-    price = price + drift + wave * 0.16 + pulse * 0.12
-
-    labels.push(`${config.label}-${config.points - 1 - i}`)
+    price = price + drift + wave * 0.28 + pulse * 0.18
     values.push(Number(price.toFixed(2)))
   }
 
@@ -369,17 +382,17 @@ function App() {
           </article>
           <article>
             <span>Sharpe Ratio</span>
-            <strong>{signal.metrics.winRate}</strong>
+            <strong>{signal.metrics.sharpe}</strong>
             <small>Risk-adjusted return</small>
           </article>
           <article>
             <span>Max Drawdown</span>
-            <strong>{signal.metrics.winRate}</strong>
+            <strong>{signal.metrics.drawdown}</strong>
             <small>Backtest risk floor</small>
           </article>
           <article>
             <span>Backtest Return</span>
-            <strong>{signal.metrics.winRate}</strong>
+            <strong>{signal.metrics.backtest}</strong>
             <small>Simulated strategy P/L</small>
           </article>
         </section>
