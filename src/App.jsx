@@ -1,6 +1,61 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import ReactECharts from 'echarts-for-react'
 import './App.css'
+
+function TradingViewWidget() {
+  const containerRef = useRef(null)
+
+  useEffect(() => {
+    if (!containerRef.current) return
+
+    containerRef.current.innerHTML = ''
+
+    const widget = document.createElement('div')
+    widget.className = 'tradingview-widget-container__widget'
+
+    const script = document.createElement('script')
+    script.src =
+      'https://s3.tradingview.com/external-embedding/embed-widget-symbol-overview.js'
+    script.type = 'text/javascript'
+    script.async = true
+    script.innerHTML = JSON.stringify({
+      symbols: [
+        ['NASDAQ:NVDA|1D'],
+        ['NASDAQ:AAPL|1D'],
+        ['NASDAQ:TSLA|1D'],
+        ['NYSE:TSM|1D'],
+      ],
+      chartOnly: false,
+      width: '100%',
+      height: 360,
+      locale: 'en',
+      colorTheme: 'dark',
+      autosize: true,
+      showVolume: false,
+      showMA: false,
+      hideDateRanges: false,
+      hideMarketStatus: false,
+      hideSymbolLogo: false,
+      scalePosition: 'right',
+      scaleMode: 'Normal',
+      fontFamily: 'Inter, sans-serif',
+      fontSize: '10',
+      noTimeScale: false,
+      valuesTracking: '1',
+      changeMode: 'price-and-percent',
+      chartType: 'area',
+      backgroundColor: 'rgba(15, 23, 42, 0)',
+      lineWidth: 2,
+      lineType: 0,
+      dateRanges: ['1d|1', '1m|30', '6m|1D'],
+    })
+
+    containerRef.current.appendChild(widget)
+    containerRef.current.appendChild(script)
+  }, [])
+
+  return <div ref={containerRef} className="tradingview-widget-container" />
+}
 
 const stocks = {
   NVDA: {
@@ -375,6 +430,17 @@ function App() {
         </section>
 
         <section className="metric-grid">
+        <section className="tradingview-panel">
+          <div className="tradingview-heading">
+            <div>
+              <p className="eyebrow">TradingView Reference</p>
+              <h2>Live Market Snapshot</h2>
+            </div>
+            <span>External market widget</span>
+          </div>
+
+            <TradingViewWidget />
+          </section>
             <article>
                 <span>Win Rate</span>
                 <strong>{signal.metrics.winRate}</strong>
